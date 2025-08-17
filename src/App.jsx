@@ -12,6 +12,7 @@ function App() {
   const [num2, setNum2] = useState('');
   const [operator, setOperator] = useState('');
   let [counter, setCount] = useState(0)
+  const [result, setResult] = useState('');
 
   const outputt1 = (num) => {
     if(!operator){
@@ -26,7 +27,7 @@ function App() {
   
 const handleOperatorClick = (op)=>{
 if(num1){
-  setOperator(operator+op);;
+  setOperator(operator+op);
 }
 }
 
@@ -34,13 +35,33 @@ const clear = ()=>{
   setNum2(" ");
   setNum1("");
   setOperator("");
+  setResult("");
 
+}
+const handleEqualsClick = ()=>{
+ let res = '';
+    const n1 = parseFloat(num1);
+    const n2 = parseFloat(num2);
+    switch (operator) {
+      case '+': res = n1 + n2; break;
+      case '-': res = n1 - n2; break;
+      case '*': res = n1 * n2; break;
+      case '/': res = n2 !== 0 ? n1 / n2 : 'Error'; break;
+      default: res = '';
+    }
+    setResult(res);
+  
 }
   return (
     <>
  <Head></Head>
       <div className='main'>
-        <div className='container'><h2>{num1}{operator}{num2}</h2></div>
+
+        <div className='container'>
+          <h2>{num1}{operator}{num2}</h2>
+          <h2>Result : {result}</h2>
+        
+        </div>
              <div className="keypad">
         <div className="row">
           <button onClick={e => outputt1(e.target.value)} className="keys" value={1}>1</button>
@@ -58,13 +79,14 @@ const clear = ()=>{
           <button onClick={e => outputt1(e.target.value)} className="keys" value={7}>7</button>
           <button onClick={e => outputt1(e.target.value)} className="keys" value={8}>8</button>
           <button onClick={e => outputt1(e.target.value)} className="keys" value={9}>9</button>
-           <button onClick={() => handleOperatorClick('/')} className="operation" >/</button>
+           <button onClick={() => handleOperatorClick('/')} className="operation" >*</button>
         </div>
           <div className="row">
-          <button onClick={clear}>C</button>
-        
+          <button onClick={clear}  className='keys'>C</button>
+          <button onClick={() => outputt1('0')}  className='keys'>0</button>
+          <button onClick={handleEqualsClick}  className='keys'>=</button>
+          <button onClick={() => handleOperatorClick('/')}  className='operation'>/</button>
         </div>
-       
       </div>
       
       </div>
